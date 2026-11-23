@@ -1,4 +1,3 @@
-# HerCall
 
 <img src="assets/hercall_logo.png" alt="HerCall" width="240">
 
