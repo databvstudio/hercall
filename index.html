@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#17304E">
+<title>HerCall | Dados e apoio</title>
+<style>
+:root {
+  --navy:#17304e; --magenta:#a4106c; --page:#fbfafb; --white:#fff;
+  --help:#fcf0f7; --lavender:#f5e8f1; --pink:#f1d6e6;
+  --line:#e7dce4; --muted:#556176;
+}
+* { box-sizing:border-box }
+body { margin:0; background:var(--page); color:var(--navy); font:1rem/1.45 system-ui,sans-serif }
+h1,h2,h3,p { margin:0 }
+[hidden] { display:none!important }
+a { color:var(--magenta); text-underline-offset:.18em }
+:focus-visible { outline:3px solid var(--magenta); outline-offset:3px }
+.sr-only,.skip:not(:focus) { position:absolute; width:1px; height:1px; padding:0; clip-path:inset(50%); overflow:hidden; white-space:nowrap }
+.skip { display:block; padding:.5rem 1rem }
+.page { max-width:74rem; margin:1rem auto; width:calc(100% - 2rem); border:1px solid var(--line); border-radius:1rem; padding:0 1rem 1rem }
+header { display:flex; align-items:center; justify-content:space-between; gap:.75rem; padding:.7rem .15rem; border-bottom:1px solid var(--line) }
+.brand { display:flex; align-items:center; gap:.65rem; font-size:.8rem; font-weight:800; text-decoration:none; color:var(--navy) }
+.brand img { display:block; width:2.25rem; height:2.25rem; border-radius:50% }
+.accent { color:var(--magenta) }
+.languages { display:flex; gap:.3rem }
+.languages button { display:grid; place-items:center; width:2.75rem; height:2.75rem; padding:.35rem; border:1px solid transparent; border-radius:50%; background:none; cursor:pointer }
+.languages button[aria-pressed="true"] { border-color:var(--magenta) }
+.flag { width:100%; aspect-ratio:1; border-radius:50%; display:block; overflow:hidden }
+.wordmark { margin:1rem .45rem .8rem }
+.wordmark img { display:block; width:clamp(9rem,18vw,11.25rem); max-width:100%; height:auto }
+.layout { display:grid; grid-template-columns:minmax(0,3fr) minmax(0,2fr); grid-template-areas:"dash info"; align-items:start; gap:1rem }
+.dashboard { grid-area:dash; padding:.85rem; border-radius:.85rem; background:var(--lavender) }
+.info { grid-area:info; display:grid; gap:1.15rem }
+.intro { padding:0 .3rem; margin-bottom:.1rem }
+.intro h2 { font-size:clamp(1.25rem,2.35vw,1.65rem); color:var(--magenta); line-height:1.2; margin-bottom:.5rem }
+.intro p { font-size:.92rem }
+.help,.rights { padding:.85rem; border-radius:.85rem; background:var(--help) }
+.help h2,.rights h2,.dashboard h2 { font-size:1.08rem; margin-bottom:.35rem }
+.select-shell { position:relative; margin-top:.35rem }
+.select-shell::after,.rights summary::after { content:""; display:inline-block; width:.45rem; height:.45rem; border-right:2px solid currentColor; border-bottom:2px solid currentColor; transform:rotate(45deg); }
+.select-shell::after { position:absolute; right:.95rem; top:calc(50% - .35rem); pointer-events:none }
+label { font-size:.9rem }
+select { appearance:none; background:var(--white); border:1px solid #dda8c9; color:inherit; width:100%; min-height:2.8rem; padding:.45rem 2rem .45rem .7rem; border-radius:.55rem; font:inherit; font-weight:650 }
+.question { margin:1rem .12rem .55rem; font-size:clamp(1.3rem,2.55vw,1.8rem); line-height:1.18 }
+.contacts { display:grid; gap:.48rem }
+.contact { display:grid; place-items:center; gap:.1rem; min-height:3.85rem; border-radius:.6rem; background:var(--magenta); color:var(--white); text-align:center; text-decoration:none; padding:.6rem }
+.contact:hover { text-decoration:underline }
+.contact.emergency { background:var(--navy) }
+.contact svg { width:1.1rem; height:1.1rem }
+.contact-title { font-weight:750 }
+.contact-name { font-size:.8rem }
+.status:not(:empty) { margin-top:.55rem }
+.rights p { font-size:.88rem; margin:.3rem 0 }
+.rights summary { cursor:pointer; width:fit-content; list-style:none; color:var(--magenta); font-weight:650; padding:.3rem 0 }
+.rights summary::-webkit-details-marker { display:none }
+.rights summary::after { margin:0 0 .2rem .6rem }
+.rights details[open] summary::after { transform:rotate(225deg); margin-bottom:0 }
+.rights details[open] .closed-label,.rights details:not([open]) .open-label { display:none }
+.reference { border-top:1px solid var(--line); padding:.55rem 0 .3rem }
+.reference h3 { font-size:.92rem }
+.reference a { display:inline-block; font-size:.9rem; font-weight:650; padding:.2rem 0 }
+.dash-demo { display:grid; gap:.5rem; padding:.55rem; background:var(--white); border-radius:.6rem }
+.dash-toolbar,.mini-cards { display:flex; gap:.35rem }
+.dash-toolbar { justify-content:space-between }
+.dash-toolbar span { width:38%; height:.85rem; background:var(--pink); border-radius:.3rem }
+.dash-toolbar span+span { width:25%; background:var(--line) }
+.mini-cards span,.dash-module,.chart { background:var(--lavender); border-radius:.4rem }
+.mini-cards span { flex:1; min-height:2.8rem; display:grid; place-items:center; color:var(--magenta); font-size:.8rem }
+.chart { display:block; width:100%; height:clamp(8rem,16vw,12rem) }
+.chart-grid { fill:none; stroke:#dfb2cf; stroke-width:1 }
+.chart-line { fill:none; stroke:var(--magenta); stroke-width:4; stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke }
+.dash-module { min-height:clamp(3.5rem,7vw,6rem); display:grid; place-items:center; color:var(--magenta) }
+.dash-module svg { width:1.1rem; height:1.1rem }
+.dash-note { margin-top:.45rem; font-size:.86rem }
+.report-frame { width:100%; min-height:32rem; border:0; background:var(--white); border-radius:.6rem }
+footer { width:fit-content; margin:.6rem auto 1.25rem; color:var(--muted); font-size:.78rem }
+@media(max-width:45rem) {
+  .page { width:calc(100% - 1rem); margin:.5rem auto; padding:0 .7rem .7rem }
+  .layout { grid-template-columns:minmax(0,1fr); grid-template-areas:"info" "dash" }
+  .info { gap:1rem }
+  .wordmark { margin:.85rem .2rem .7rem }
+  .contact { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; column-gap:.45rem }
+  .contact-name { flex-basis:100% }
+  .dash-module { display:none }
+  .report-frame { min-height:23rem }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#apoio" data-text="skip"></a>
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <symbol id="phone" viewBox="0 0 24 24"><path d="M7 3H4a1 1 0 0 0-1 1c0 9.4 7.6 17 17 17a1 1 0 0 0 1-1v-3l-5-2-2 2a13 13 0 0 1-7-7l2-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+  <symbol id="sms" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 3v-3H4z M8 10h8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+  <symbol id="bars" viewBox="0 0 24 24"><path d="M3 21V12h4v9zm7 0V7h4v14zm7 0V3h4v18z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+</svg>
+<div class="page" id="inicio">
+  <header>
+    <a class="brand" href="#inicio"><img src="./databv_assets/logo.png" width="36" height="36" alt=""><span>DATABV <span class="accent">HER CALL</span></span></a>
+    <nav class="languages" data-label="languages">
+      <button type="button" data-language="en" aria-label="English" lang="en" aria-pressed="false"><svg class="flag" viewBox="0 0 39 39" aria-hidden="true"><rect width="39" height="39" fill="#fff"/><path stroke="#b1283d" stroke-width="3" d="M0 1.5H39M0 7.5H39M0 13.5H39M0 19.5H39M0 25.5H39M0 31.5H39M0 37.5H39"/><path fill="#294175" d="M0 0h20v21H0z"/><path stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-dasharray=".5 3.3" d="M1.5 4h17M1.5 8h17M1.5 12h17M1.5 16h17M1.5 19h17"/></svg></button>
+      <button type="button" data-language="es" aria-label="Español" lang="es" aria-pressed="false"><svg class="flag" viewBox="0 0 39 39" aria-hidden="true"><path fill="#b90f28" d="M0 0h39v39H0z"/><path fill="#ffc63f" d="M0 10h39v19H0z"/><path fill="#a82943" d="M10 15h7v9l-3.5 2-3.5-2z"/><path fill="#f8e6b3" d="M12 17h3v6h-3z"/></svg></button>
+      <button type="button" data-language="pt-BR" aria-label="Português" lang="pt-BR" aria-pressed="true"><svg class="flag" viewBox="0 0 39 39" aria-hidden="true"><path fill="#168342" d="M0 0h39v39H0z"/><path fill="#ffdf55" d="m3 19.5 16.5-10.5L36 19.5 19.5 30z"/><circle cx="19.5" cy="19.5" r="7" fill="#22418a"/><path d="M13.3 17.7q7-.7 12.5 5.4" fill="none" stroke="#fff" stroke-width="1.6"/></svg></button>
+    </nav>
+  </header>
+  <h1 class="wordmark">
+    <img src="./assets/hercall_logo.png" alt="HerCall" width="180" height="60">
+  </h1>
+  <main class="layout">
+    <div class="info">
+      <section class="intro" aria-labelledby="intro-title">
+        <h2 id="intro-title" data-text="introTitle"></h2>
+        <p data-text="intro"></p>
+      </section>
+      <section class="help" id="apoio" aria-labelledby="help-title">
+        <h2 id="help-title" data-text="help"></h2>
+        <label for="country" data-text="country"></label>
+        <div class="select-shell"><select id="country" disabled></select></div>
+        <div id="results" aria-busy="true">
+          <h3 class="question" id="question" hidden><span id="question-start"></span><span class="accent" id="country-name"></span><span>?</span></h3>
+          <p class="sr-only" id="status" role="status"></p>
+          <div id="contacts" class="contacts"></div>
+        </div>
+        <noscript><p>Ative o JavaScript para consultar os canais de ajuda.</p></noscript>
+      </section>
+      <section class="rights" id="direitos" aria-labelledby="rights-title" hidden>
+        <h2 id="rights-title" data-text="rights"></h2>
+        <p data-text="rightsIntro"></p>
+        <details id="rights-details">
+          <summary><span class="closed-label" data-text="show"></span><span class="open-label" data-text="hide"></span></summary>
+          <div id="references"></div>
+        </details>
+      </section>
+    </div>
+    <section class="dashboard" aria-labelledby="dash-title">
+      <h2 id="dash-title" data-text="introTitle"></h2>
+      <div id="report">
+        <div class="dash-demo" aria-hidden="true">
+          <div class="dash-toolbar"><span></span><span></span></div>
+          <div class="mini-cards"><span>KPI</span><span>KPI</span><span>KPI</span></div>
+          <svg class="chart" viewBox="0 0 480 168" preserveAspectRatio="none"><path class="chart-grid" d="M8 30H472 M8 64H472 M8 98H472 M8 132H472"/><path class="chart-line" d="M18 127 L78 102 L138 113 L198 66 L258 83 L318 42 L378 60 L462 24"/></svg>
+          <div class="dash-module"><svg aria-hidden="true"><use href="#bars"/></svg></div>
+          <div class="dash-module"><svg aria-hidden="true"><use href="#bars"/></svg></div>
+        </div>
+        <p class="dash-note" data-text="preview"></p>
+      </div>
+    </section>
+  </main>
+</div>
+<footer>DataBV Product © 2026</footer>
+<script type="application/json" id="countries-data">[
+  {
+    "code": "BR",
+    "name": {
+      "pt-BR": "Brasil",
+      "en": "Brazil",
+      "es": "Brasil"
+    },
+    "location": "no",
+    "contacts": [
+      {
+        "name": {
+          "pt-BR": "Central de Atendimento à Mulher",
+          "en": "Women's Support Helpline",
+          "es": "Línea de Atención a la Mujer"
+        },
+        "detail": "Orientação, serviços de apoio e denúncias. Atendimento 24 horas.",
+        "number": "180",
+        "channel": "tel",
+        "source": "https://www.gov.br/mulheres/pt-br/ligue180"
+      },
+      {
+        "name": {
+          "pt-BR": "Polícia Militar",
+          "en": "Military Police",
+          "es": "Policía Militar"
+        },
+        "detail": "Emergência policial ou risco imediato.",
+        "number": "190",
+        "channel": "tel",
+        "kind": "emergency",
+        "source": "https://www.gov.br/mulheres/pt-br/ligue180"
+      }
+    ],
+    "laws": [
+      {
+        "name": "Lei Maria da Penha",
+        "detail": {
+          "pt-BR": "Lei nº 11.340/2006",
+          "en": "Law No. 11,340/2006",
+          "es": "Ley n.º 11.340/2006"
+        },
+        "source": "https://planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm"
+      }
+    ],
+    "dial": "+55",
+    "resources": [
+      {
+        "kind": "network",
+        "name": {
+          "pt-BR": "Rede de atendimento à mulher",
+          "en": "Women's support network",
+          "es": "Red de atención a las mujeres"
+        },
+        "detail": {
+          "pt-BR": "Encontre serviços especializados na sua região.",
+          "en": "Find specialist services in your area.",
+          "es": "Encuentra servicios especializados en tu zona."
+        },
+        "source": "https://www.gov.br/mulheres/pt-br/ligue180"
+      }
+    ]
+  },
+  {
+    "code": "PT",
+    "name": {
+      "pt-BR": "Portugal",
+      "en": "Portugal",
+      "es": "Portugal"
+    },
+    "location": "em",
+    "contacts": [
+      {
+        "name": {
+          "pt-BR": "Número Europeu de Emergência",
+          "en": "European Emergency Number",
+          "es": "Número Europeo de Emergencias"
+        },
+        "detail": "Emergências e risco imediato.",
+        "number": "112",
+        "channel": "tel",
+        "kind": "emergency",
+        "source": "https://www.gov.pt/linhas-uteis"
+      },
+      {
+        "name": {
+          "pt-BR": "Apoio a vítimas de violência doméstica",
+          "en": "Domestic violence support",
+          "es": "Apoyo a víctimas de violencia doméstica"
+        },
+        "detail": "Serviço gratuito e confidencial, disponível 24 horas.",
+        "number": "800 202 148",
+        "channel": "tel",
+        "source": "https://www.cig.gov.pt/area-portal-da-violencia/portal-violencia-domestica/servico-de-informacao-as-vitimas-de-violencia-domestica/"
+      },
+      {
+        "name": {
+          "pt-BR": "Linha SMS para violência doméstica",
+          "en": "Domestic violence text support",
+          "es": "Apoyo por SMS para violencia doméstica"
+        },
+        "detail": "Apoio por mensagem, gratuito e confidencial.",
+        "number": "3060",
+        "channel": "sms",
+        "source": "https://www.cig.gov.pt/area-portal-da-violencia/portal-violencia-domestica/servico-de-informacao-as-vitimas-de-violencia-domestica/"
+      }
+    ],
+    "laws": [
+      {
+        "name": {
+          "pt-BR": "Lei n.º 112/2009",
+          "en": "Law No. 112/2009",
+          "es": "Ley n.º 112/2009"
+        },
+        "detail": {
+          "pt-BR": "Prevenção da violência doméstica e assistência às vítimas.",
+          "en": "Domestic violence prevention and victim support.",
+          "es": "Prevención de la violencia doméstica y asistencia a las víctimas."
+        },
+        "source": "https://diariodarepublica.pt/dr/detalhe/lei/112-2009-490247"
+      }
+    ],
+    "dial": "+351",
+    "resources": [
+      {
+        "kind": "network",
+        "name": {
+          "pt-BR": "Rede Nacional de Apoio às Vítimas de Violência Doméstica",
+          "en": "National Domestic Violence Support Network",
+          "es": "Red Nacional de Apoyo a las Víctimas de Violencia Doméstica"
+        },
+        "detail": {
+          "pt-BR": "Consulte os serviços de apoio e informação da CIG.",
+          "en": "View the CIG information and support services.",
+          "es": "Consulta los servicios de información y apoyo de la CIG."
+        },
+        "source": "https://www.cig.gov.pt/area-portal-da-violencia/portal-violencia-domestica/servico-de-informacao-as-vitimas-de-violencia-domestica/"
+      }
+    ]
+  }
+]</script>
+<script>
+const config = {
+  countriesUrl: "", // URL HTTPS opcional. Deve devolver o mesmo formato do JSON embutido.
+  powerBiEmbedUrls: { "pt-BR": "", en: "", es: "" }
+};
+
+const translations = {
+  "pt-BR": {
+    title: "Dados e apoio", skip: "Ir para os canais de ajuda", languages: "Idioma",
+    introTitle: "Violência contra a mulher",
+    intro: "A violência contra a mulher pode assumir diferentes formas e afetar a segurança, a saúde e a autonomia. Explore os dados para entender o problema.",
+    help: "Encontre ajuda", country: "Em que país você está?", question: "Você está ",
+    call: "Ligue", emergency: "Emergência", rights: "Direitos e proteção",
+    rightsIntro: "Legislação e canais oficiais do país selecionado.",
+    show: "Consultar informações", hide: "Ocultar informações", law: "Ler o texto oficial",
+    network: "Consultar a rede de atendimento", preview: "Prévia ilustrativa do painel Power BI",
+    report: "Painel HerCall no Power BI", loading: "Carregando países…",
+    unavailable: "Não foi possível carregar os contatos. Recarregue a página para tentar novamente.",
+    emptyContacts: "Canais de apoio ainda não cadastrados.", emptyRights: "Informações oficiais ainda não cadastradas.",
+    updated: "Canais de apoio atualizados para "
+  },
+  en: {
+    title: "Data and support", skip: "Skip to support", languages: "Language",
+    introTitle: "Violence against women",
+    intro: "Violence against women can take many forms and affect their safety, health, and autonomy. Explore the data to understand the issue.",
+    help: "Find support", country: "Which country are you in?", question: "Are you in ",
+    call: "Call", emergency: "Emergency", rights: "Rights and protection",
+    rightsIntro: "Laws and official resources for the selected country.",
+    show: "View information", hide: "Hide information", law: "Read the official law",
+    network: "View the support network", preview: "Illustrative Power BI dashboard preview",
+    report: "HerCall Power BI dashboard", loading: "Loading countries…",
+    unavailable: "We couldn't load the contacts. Reload the page to try again.",
+    emptyContacts: "Support contacts have not been added yet.", emptyRights: "Official information has not been added yet.",
+    updated: "Support contacts updated for "
+  },
+  es: {
+    title: "Datos y apoyo", skip: "Ir a los canales de ayuda", languages: "Idioma",
+    introTitle: "Violencia contra las mujeres",
+    intro: "La violencia contra las mujeres puede adoptar distintas formas y afectar su seguridad, su salud y su autonomía. Explora los datos para entender el problema.",
+    help: "Encuentra ayuda", country: "¿En qué país estás?", question: "¿Estás en ",
+    call: "Llama al", emergency: "Emergencias", rights: "Derechos y protección",
+    rightsIntro: "Legislación y recursos oficiales del país seleccionado.",
+    show: "Consultar información", hide: "Ocultar información", law: "Leer el texto oficial",
+    network: "Consultar la red de atención", preview: "Vista previa ilustrativa del panel de Power BI",
+    report: "Panel de HerCall en Power BI", loading: "Cargando países…",
+    unavailable: "No se pudieron cargar los contactos. Vuelve a cargar la página para intentarlo de nuevo.",
+    emptyContacts: "Todavía no hay contactos de apoyo registrados.", emptyRights: "Todavía no hay información oficial registrada.",
+    updated: "Contactos de apoyo actualizados para "
+  }
+};
+
+const select = document.querySelector("#country");
+const question = document.querySelector("#question");
+const contacts = document.querySelector("#contacts");
+const rights = document.querySelector("#direitos");
+const details = document.querySelector("#rights-details");
+const references = document.querySelector("#references");
+const status = document.querySelector("#status");
+const report = document.querySelector("#report");
+const reportPreview = [...report.childNodes];
+const languageButtons = document.querySelectorAll("[data-language]");
+const textNodes = [...document.querySelectorAll("[data-text]")];
+
+let language = "pt-BR";
+let countries = [];
+let failed = false;
+let currentReport = null;
+
+function localized(value) {
+  return typeof value === "string" ? value : value?.[language] ?? value?.["pt-BR"] ?? "";
+}
+
+function element(tag, className, content) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (content) node.textContent = content;
+  return node;
+}
+
+function contactButton(contact, copy) {
+  const number = contact.number.replace(/[^\d+]/g, "");
+  if (!/^\+?\d+$/.test(number)) return null;
+
+  const channel = contact.channel === "sms" ? "sms" : "tel";
+  const emergency = contact.kind === "emergency";
+  const action = emergency ? copy.emergency : channel === "sms" ? "SMS" : copy.call;
+  const link = element("a", emergency ? "contact emergency" : "contact");
+  const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+  use.setAttribute("href", channel === "sms" ? "#sms" : "#phone");
+  icon.setAttribute("aria-hidden", "true");
+  icon.append(use);
+  link.href = channel + ":" + number;
+  link.append(icon, element("span", "contact-title", action + " " + contact.number),
+    element("span", "contact-name", localized(contact.name)));
+  return link;
+}
+
+function resourceRow(resource, copy) {
+  const source = URL.parse(resource.source);
+  if (source?.protocol !== "https:") return null;
+  const row = element("div", "reference");
+  const link = element("a", "", resource.kind === "network" ? copy.network : copy.law);
+  link.href = source.href;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  row.append(element("h3", "", localized(resource.name)),
+    element("p", "", localized(resource.detail)), link);
+  return row;
+}
+
+function renderCountry(announce = false) {
+  const copy = translations[language];
+  const country = countries.find(item => item.code === select.value);
+  question.hidden = !country;
+  rights.hidden = !country;
+  status.className = failed ? "status" : "sr-only";
+  status.textContent = failed ? copy.unavailable : "";
+
+  if (!country) return;
+  const name = localized(country.name);
+  const prefix = language === "pt-BR" ? copy.question + (country.location || "em") + " " : copy.question;
+  document.querySelector("#question-start").textContent = prefix;
+  document.querySelector("#country-name").textContent = name;
+
+  const buttons = country.contacts.map(contact => contactButton(contact, copy)).filter(Boolean);
+  const resources = [...country.laws, ...(country.resources ?? [])].map(resource => resourceRow(resource, copy)).filter(Boolean);
+  contacts.replaceChildren(...(buttons.length ? buttons : [element("p", "status", copy.emptyContacts)]));
+  references.replaceChildren(...(resources.length ? resources : [element("p", "", copy.emptyRights)]));
+  if (announce) status.textContent = copy.updated + name + ".";
+}
+
+function renderReport(copy) {
+  const embed = URL.parse(config.powerBiEmbedUrls[language] || " ");
+  const url = embed?.origin === "https://app.powerbi.com" ? embed.href : null;
+
+  if (url === currentReport) {
+    if (url) report.querySelector("iframe").title = copy.report;
+    return;
+  }
+  currentReport = url;
+  if (!url) {
+    report.replaceChildren(...reportPreview);
+    return;
+  }
+  const frame = element("iframe", "report-frame");
+  frame.title = copy.report;
+  frame.src = url;
+  frame.allowFullscreen = true;
+  frame.loading = "lazy";
+  report.replaceChildren(frame);
+}
+
+function renderLanguage() {
+  const copy = translations[language];
+  const selected = select.value;
+  document.documentElement.lang = language;
+  document.title = "HerCall | " + copy.title;
+  textNodes.forEach(node => { node.textContent = copy[node.dataset.text]; });
+  document.querySelectorAll("[data-label]").forEach(node => {
+    node.setAttribute("aria-label", copy[node.dataset.label]);
+  });
+  languageButtons.forEach(button => button.setAttribute("aria-pressed", String(button.dataset.language === language)));
+
+  if (countries.length) {
+    select.replaceChildren(...countries.map(country => new Option(
+      (country.dial ? "(" + country.dial + ") " : "") + localized(country.name), country.code)));
+    select.value = countries.find(country => country.code === selected)?.code
+      ?? countries.find(country => country.code === "BR")?.code ?? countries[0].code;
+  } else {
+    select.replaceChildren(new Option(failed ? "—" : copy.loading, ""));
+  }
+  renderCountry();
+  renderReport(copy);
+}
+
+async function readCountries() {
+  if (!config.countriesUrl) return JSON.parse(document.querySelector("#countries-data").textContent);
+  const response = await fetch(config.countriesUrl);
+  if (!response.ok) throw new Error("Base indisponível");
+  return response.json();
+}
+
+async function initialize() {
+  renderLanguage();
+  try {
+    const data = await readCountries();
+    if (!Array.isArray(data) || !data.length) throw new Error("Base vazia");
+    countries = data;
+    select.disabled = false;
+  } catch {
+    failed = true;
+  } finally {
+    document.querySelector("#results").setAttribute("aria-busy", "false");
+    renderLanguage();
+  }
+}
+
+languageButtons.forEach(button => button.addEventListener("click", () => {
+  language = button.dataset.language;
+  renderLanguage();
+}));
+select.addEventListener("change", () => {
+  details.open = false;
+  renderCountry(true);
+});
+initialize();
+</script>
+</body>
+</html>
