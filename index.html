@@ -345,21 +345,26 @@ link.setAttribute("aria-label", action + " " + link.textContent);
   return link;
 }
 
+
+
 function contactButton(contact, copy, excludedNumbers = new Set()) {
   const card = element("article", contact.emergency ? "contact emergency" : "contact");
   const actions = element("div", "contact-links");
   const phones = String(contact.phone ?? "").trim()
     .split(/\s*(?:\bor\b|\bou\b|\bo\b|[;\n])\s*/i)
     .filter(Boolean);
+
   let canCall = false;
 
   for (const label of phones) {
     const number = label.replace(/^.*\((\+?\d[\d .-]+)\)\s*$/, "$1");
     const digits = number.replace(/\D/g, "");
     const localAreaSlash = /^\d{3,5}\/\d[\d .-]+$/.test(number);
+
     const canDial = (/^\+?\d[\d ().–-]*$/.test(number) || localAreaSlash)
       && !/^\+.*\(0\)/.test(number)
-      && digits.length >= 3 && digits.length <= 15;
+      && digits.length >= 3
+      && digits.length <= 15;
 
     if (!canDial) {
       actions.append(element("span", "", label));
@@ -370,7 +375,9 @@ function contactButton(contact, copy, excludedNumbers = new Set()) {
     if (excludedNumbers.has(dial)) continue;
 
     const action = contact.emergency ? copy.emergency : copy.call;
-    const link = element("a", "", action + " " + label);
+    const display = /^[+\d][\d\s()./–-]*$/.test(label) ? label : number;
+    const link = element("a", "", display);
+    link.setAttribute("aria-label", action + " " + display);
     link.href = "tel:" + dial;
     actions.append(link);
     canCall = true;
@@ -379,9 +386,12 @@ function contactButton(contact, copy, excludedNumbers = new Set()) {
   const site = externalLink(contact.url, contact.official ? copy.source : copy.site);
   if (site) actions.append(site);
   if (!actions.childElementCount) return null;
-  if (!canCall) card.classList.add("contact-resource");
 
-  card.append(actions, element("span", "contact-title", contact.org_name || contact.category));
+  if (!canCall) card.classList.add("contact-resource");
+  card.append(
+    element("span", "contact-title", contact.org_name || contact.category),
+    actions
+  );
   return card;
 }
 
@@ -390,8 +400,9 @@ function resourceRow(resource, copy) {
   row.append(element("h3", "", resource.title));
 
   if (resource.start_year != null) {
-    const years = [resource.start_year, resource.end_year].filter((year, index, values) =>
-      year != null && values.indexOf(year) === index);
+    const years = [resource.start_year, resource.end_year].filter(
+      (year, index, values) => year != null && values.indexOf(year) === index
+    );
     row.append(element("p", "", years.join("–")));
   }
 
@@ -423,25 +434,45 @@ function renderCountry(announce = false) {
 
   const officialSource = "https://www.gov.br/mulheres/pt-br/assuntos/ligue180";
   const officialContacts = country.code === "BR" ? [
-    { org_name: "Polícia Militar", phone: "190", emergency: true, official: true, url: officialSource },
-    { org_name: "Central de Atendimento à Mulher", phone: "180", official: true, url: officialSource }
+    {
+      org_name: "Polícia Militar",
+      phone: "190",
+      emergency: true,
+      official: true,
+      url: officialSource
+    },
+    {
+      org_name: "Central de Atendimento à Mulher",
+      phone: "180",
+      official: true,
+      url: officialSource
+    }
   ] : [];
+
   const officialNumbers = new Set(officialContacts.map(contact => contact.phone));
   const buttons = [
     ...officialContacts.map(contact => contactButton(contact, copy)),
-    ...country.contacts.map(contact => contactButton(contact, copy, officialNumbers))
+    ...(country.contacts ?? []).map(contact => contactButton(contact, copy, officialNumbers))
   ].filter(Boolean);
 
-  const resources = country.laws.map(resource => resourceRow(resource, copy));
+  const resources = (country.laws ?? []).map(resource => resourceRow(resource, copy));
   const directory = externalLink(country.help_url, copy.network + " · NO MORE");
-  contacts.replaceChildren(...(buttons.length ? buttons : [element("p", "status", copy.emptyContacts)]));
+
+  contacts.replaceChildren(
+    ...(buttons.length ? buttons : [element("p", "status", copy.emptyContacts)])
+  );
   if (directory) contacts.append(directory);
 
-  references.replaceChildren(...(resources.length ? resources : [element("p", "", copy.emptyRights)]));
+  references.replaceChildren(
+    ...(resources.length ? resources : [element("p", "", copy.emptyRights)])
+  );
+
   if (announce) status.textContent = copy.updated + name + ".";
 }
 
-let renderedLogoLanguage;
+
+
+  
 
 function renderLogo() {
   if (language === renderedLogoLanguage) return;
