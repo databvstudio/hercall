@@ -42,18 +42,21 @@ html[lang="es"] .wordmark img { --wordmark-scale:1.22 }
 .help,.rights { padding:.85rem; border-radius:.85rem; background:var(--help) }
 .help h2,.rights h2,.dashboard h2 { font-size:1.08rem; margin-bottom:.35rem }
 .select-shell { position:relative; margin-top:.35rem }
-.select-shell::after,.rights summary::after { content:""; display:inline-block; width:.45rem; height:.45rem; border-right:2px solid currentColor; border-bottom:2px solid currentColor; transform:rotate(45deg); }
+.select-shell::after,.rights summary::after { content:""; display:inline-block; width:.45rem; height:.45rem; border-right:2px solid currentColor; border-bottom:2px solid currentColor; transform:rotate(45deg) }
 .select-shell::after { position:absolute; right:.95rem; top:calc(50% - .35rem); pointer-events:none }
 label { font-size:.9rem }
 select { appearance:none; background:var(--white); border:1px solid #dda8c9; color:inherit; width:100%; min-height:2.8rem; padding:.45rem 2rem .45rem .7rem; border-radius:.55rem; font:inherit; font-weight:650 }
 .question { margin:1rem .12rem .55rem; font-size:clamp(1.3rem,2.55vw,1.8rem); line-height:1.18 }
 .contacts { display:grid; gap:.48rem }
-.contact { display:grid; place-items:center; gap:.1rem; min-height:3.85rem; border-radius:.6rem; background:var(--magenta); color:var(--white); text-align:center; text-decoration:none; padding:.6rem }
-.contact:hover { text-decoration:underline }
+.contact { display:grid; place-items:center; gap:.25rem; min-height:3.85rem; border-radius:.6rem; background:var(--magenta); color:var(--white); text-align:center; padding:.6rem }
 .contact.emergency { background:var(--navy) }
-.contact svg { width:1.1rem; height:1.1rem }
 .contact-title { font-weight:750 }
-.contact-name { font-size:.8rem }
+.contact-links { display:flex; flex-wrap:wrap; justify-content:center; gap:.3rem .65rem }
+.contact-links a { color:inherit; padding:.35rem .6rem }
+.contact-links a[href^="tel:"] { font-size:1.1rem; font-weight:750; text-decoration:underline }
+.contact-links a:focus-visible { outline-color:currentColor }
+.contact.contact-resource { background:var(--white); color:var(--navy); border:1px solid var(--line) }
+.contact-resource .contact-links a { color:var(--magenta) }
 .status:not(:empty) { margin-top:.55rem }
 .rights p { font-size:.88rem; margin:.3rem 0 }
 .rights summary { cursor:pointer; width:fit-content; list-style:none; color:var(--magenta); font-weight:650; padding:.3rem 0 }
@@ -65,43 +68,56 @@ select { appearance:none; background:var(--white); border:1px solid #dda8c9; col
 .reference h3 { font-size:.92rem }
 .reference a { display:inline-block; font-size:.9rem; font-weight:650; padding:.2rem 0 }
 .contribute { justify-self:start; color:var(--muted); border:1px solid var(--line); background:var(--white); border-radius:.55rem; padding:.55rem .75rem; font:inherit }
-.contribute button:disabled { cursor:default }
-.contact > a { color:inherit; padding:.2rem }
-.contact .contact-name { display:block }
-.contact-links { display:flex; flex-wrap:wrap; justify-content:center; gap:.65rem }
 .report-external { display:inline-block; margin-top:.5rem; font-size:.875rem }
-footer { text-align:center; padding:0 .75rem }
-footer button { font:inherit; color:inherit }
 .dash-note { margin-top:.45rem; font-size:.86rem }
 .report-frame { width:100%; min-height:32rem; border:0; background:var(--white); border-radius:.6rem }
-footer { width:fit-content; margin:.6rem auto 1.25rem; color:var(--muted); font-size:.78rem }
+footer { width:fit-content; margin:.6rem auto 1.25rem; padding:0 .75rem; text-align:center; color:var(--muted); font-size:.78rem }
+footer button { font:inherit; color:inherit }
 @media(max-width:45rem) {
   .page { width:calc(100% - 1rem); margin:.5rem auto; padding:0 .7rem .7rem }
   .layout { grid-template-columns:minmax(0,1fr); grid-template-areas:"info" "dash" }
   .info { gap:1rem }
   .wordmark { margin:.85rem .2rem .7rem }
-  .contact { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; column-gap:.45rem }
-  .contact-name { flex-basis:100% }
   .report-frame { min-height:23rem }
 }
 </style>
 </head>
 <body>
 <a class="skip" href="#apoio" data-text="skip"></a>
-<svg width="0" height="0" aria-hidden="true" style="position:absolute">
-  <symbol id="phone" viewBox="0 0 24 24"><path d="M7 3H4a1 1 0 0 0-1 1c0 9.4 7.6 17 17 17a1 1 0 0 0 1-1v-3l-5-2-2 2a13 13 0 0 1-7-7l2-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
-  <symbol id="sms" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 3v-3H4z M8 10h8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
-  <symbol id="bars" viewBox="0 0 24 24"><path d="M3 21V12h4v9zm7 0V7h4v14zm7 0V3h4v18z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
-</svg>
 <div class="page" id="inicio">
   <header>
-    <a class="brand" href="#inicio"><img src="./databv_assets/logo.png" width="36" height="36" alt=""><span>DATABV <span class="accent">HER CALL</span></span></a>
+    <a class="brand" href="#inicio">
+      <img src="./databv_assets/logo.png" width="36" height="36" alt="">
+      <span>DATABV <span class="accent">HER CALL</span></span>
+    </a>
     <nav class="languages" data-label="languages">
-      <button type="button" data-language="en" aria-label="English" lang="en" aria-pressed="false"><svg class="flag" viewBox="0 0 39 39" aria-hidden="true"><rect width="39" height="39" fill="#fff"/><path stroke="#b1283d" stroke-width="3" d="M0 1.5H39M0 7.5H39M0 13.5H39M0 19.5H39M0 25.5H39M0 31.5H39M0 37.5H39"/><path fill="#294175" d="M0 0h20v21H0z"/><path stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-dasharray=".5 3.3" d="M1.5 4h17M1.5 8h17M1.5 12h17M1.5 16h17M1.5 19h17"/></svg></button>
-      <button type="button" data-language="es" aria-label="Español" lang="es" aria-pressed="false"><svg class="flag" viewBox="0 0 39 39" aria-hidden="true"><path fill="#b90f28" d="M0 0h39v39H0z"/><path fill="#ffc63f" d="M0 10h39v19H0z"/><path fill="#a82943" d="M10 15h7v9l-3.5 2-3.5-2z"/><path fill="#f8e6b3" d="M12 17h3v6h-3z"/></svg></button>
-      <button type="button" data-language="pt-BR" aria-label="Português" lang="pt-BR" aria-pressed="true"><svg class="flag" viewBox="0 0 39 39" aria-hidden="true"><path fill="#168342" d="M0 0h39v39H0z"/><path fill="#ffdf55" d="m3 19.5 16.5-10.5L36 19.5 19.5 30z"/><circle cx="19.5" cy="19.5" r="7" fill="#22418a"/><path d="M13.3 17.7q7-.7 12.5 5.4" fill="none" stroke="#fff" stroke-width="1.6"/></svg></button>
+      <button type="button" data-language="en" aria-label="English" lang="en" aria-pressed="false">
+        <svg class="flag" viewBox="0 0 39 39" aria-hidden="true">
+          <rect width="39" height="39" fill="#fff"/>
+          <path stroke="#b1283d" stroke-width="3" d="M0 1.5H39M0 7.5H39M0 13.5H39M0 19.5H39M0 25.5H39M0 31.5H39M0 37.5H39"/>
+          <path fill="#294175" d="M0 0h20v21H0z"/>
+          <path stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-dasharray=".5 3.3" d="M1.5 4h17M1.5 8h17M1.5 12h17M1.5 16h17M1.5 19h17"/>
+        </svg>
+      </button>
+      <button type="button" data-language="es" aria-label="Español" lang="es" aria-pressed="false">
+        <svg class="flag" viewBox="0 0 39 39" aria-hidden="true">
+          <path fill="#b90f28" d="M0 0h39v39H0z"/>
+          <path fill="#ffc63f" d="M0 10h39v19H0z"/>
+          <path fill="#a82943" d="M10 15h7v9l-3.5 2-3.5-2z"/>
+          <path fill="#f8e6b3" d="M12 17h3v6h-3z"/>
+        </svg>
+      </button>
+      <button type="button" data-language="pt-BR" aria-label="Português" lang="pt-BR" aria-pressed="true">
+        <svg class="flag" viewBox="0 0 39 39" aria-hidden="true">
+          <path fill="#168342" d="M0 0h39v39H0z"/>
+          <path fill="#ffdf55" d="m3 19.5 16.5-10.5L36 19.5 19.5 30z"/>
+          <circle cx="19.5" cy="19.5" r="7" fill="#22418a"/>
+          <path d="M13.3 17.7q7-.7 12.5 5.4" fill="none" stroke="#fff" stroke-width="1.6"/>
+        </svg>
+      </button>
     </nav>
   </header>
+
   <h1 class="wordmark" id="portal-wordmark">HerCall</h1>
   <main class="layout">
     <div class="info">
@@ -109,27 +125,36 @@ footer { width:fit-content; margin:.6rem auto 1.25rem; color:var(--muted); font-
         <h2 id="intro-title" data-text="introTitle"></h2>
         <p data-text="intro"></p>
       </section>
+
       <section class="help" id="apoio" aria-labelledby="help-title">
         <h2 id="help-title" data-text="help"></h2>
         <label for="country" data-text="country"></label>
         <div class="select-shell"><select id="country" disabled></select></div>
         <div id="results" aria-busy="true">
-          <h3 class="question" id="question" hidden><span id="question-start"></span><span class="accent" id="country-name"></span><span>?</span></h3>
+          <h3 class="question" id="question" hidden>
+            <span id="question-start"></span><span class="accent" id="country-name"></span><span>?</span>
+          </h3>
           <p class="sr-only" id="status" role="status"></p>
           <div id="contacts" class="contacts"></div>
         </div>
         <noscript><p>Ative o JavaScript para consultar os canais de ajuda.</p></noscript>
       </section>
+
       <section class="rights" id="direitos" aria-labelledby="rights-title" hidden>
         <h2 id="rights-title" data-text="rights"></h2>
         <p data-text="rightsIntro"></p>
         <details id="rights-details">
-          <summary><span class="closed-label" data-text="show"></span><span class="open-label" data-text="hide"></span></summary>
+          <summary>
+            <span class="closed-label" data-text="show"></span>
+            <span class="open-label" data-text="hide"></span>
+          </summary>
           <div id="references"></div>
         </details>
       </section>
+
       <button type="button" class="contribute" disabled data-text="contribute"></button>
     </div>
+
     <section class="dashboard" aria-labelledby="dash-title">
       <h2 id="dash-title" data-text="introTitle"></h2>
       <div id="report">
@@ -138,10 +163,12 @@ footer { width:fit-content; margin:.6rem auto 1.25rem; color:var(--muted); font-
     </section>
   </main>
 </div>
+
 <footer>
   <p>DataBV Product © 2026</p>
   <button id="analytics-preference" type="button" hidden></button>
 </footer>
+
 <script>
 const config = {
   countriesUrl: "./data/hercall.json",
@@ -169,7 +196,8 @@ const translations = {
     report: "Painel HerCall no Power BI", openReport: "Abrir no Power BI", loading: "Carregando países…",
     unavailable: "Não foi possível carregar os contatos. Recarregue a página para tentar novamente.",
     emptyContacts: "Canais de apoio ainda não cadastrados.", emptyRights: "Informações oficiais ainda não cadastradas.",
-    contribute: "Contribua com mais informações", site: "Abrir site", source: "Ver referência", analyticsOn: "Permitir estatísticas de uso", analyticsOff: "Desativar estatísticas de uso",
+    contribute: "Contribua com mais informações", site: "Abrir site", source: "Ver referência",
+    analyticsOn: "Permitir estatísticas de uso", analyticsOff: "Desativar estatísticas de uso",
     updated: "Canais de apoio atualizados para "
   },
   en: {
@@ -184,7 +212,8 @@ const translations = {
     report: "HerCall Power BI dashboard", openReport: "Open in Power BI", loading: "Loading countries…",
     unavailable: "We couldn't load the contacts. Reload the page to try again.",
     emptyContacts: "Support contacts have not been added yet.", emptyRights: "Official information has not been added yet.",
-    contribute: "Contribute more information", site: "Open website", source: "View reference", analyticsOn: "Allow usage analytics", analyticsOff: "Disable usage analytics",
+    contribute: "Contribute more information", site: "Open website", source: "View reference",
+    analyticsOn: "Allow usage analytics", analyticsOff: "Disable usage analytics",
     updated: "Support contacts updated for "
   },
   es: {
@@ -199,7 +228,8 @@ const translations = {
     report: "Panel de HerCall en Power BI", openReport: "Abrir en Power BI", loading: "Cargando países…",
     unavailable: "No se pudieron cargar los contactos. Vuelve a cargar la página para intentarlo de nuevo.",
     emptyContacts: "Todavía no hay contactos de apoyo registrados.", emptyRights: "Todavía no hay información oficial registrada.",
-    contribute: "Aporta más información", site: "Abrir sitio web", source: "Ver referencia", analyticsOn: "Permitir estadísticas de uso", analyticsOff: "Desactivar estadísticas de uso",
+    contribute: "Aporta más información", site: "Abrir sitio web", source: "Ver referencia",
+    analyticsOn: "Permitir estadísticas de uso", analyticsOff: "Desactivar estadísticas de uso",
     updated: "Contactos de apoyo actualizados para "
   }
 };
@@ -232,6 +262,15 @@ function element(tag, className, content) {
   return node;
 }
 
+function parseUrl(value) {
+  if (!value) return null;
+  try {
+    return new URL(value);
+  } catch {
+    return null;
+  }
+}
+
 function externalLink(value, label, className = "") {
   const url = parseUrl(value);
   if (url?.protocol !== "https:") return null;
@@ -242,67 +281,98 @@ function externalLink(value, label, className = "") {
   return link;
 }
 
-function parseUrl(value) {
-  if (!value) return null;
-  try { return new URL(value); } catch { return null; }
-}
-
-function contactButton(contact, copy) {
-  const card = element("article", "contact");
+function contactButton(contact, copy, excludedNumbers = new Set()) {
+  const card = element("article", contact.emergency ? "contact emergency" : "contact");
   const actions = element("div", "contact-links");
-  const phone = contact.phone?.trim();
-  if (phone && /^\+?\d[\d ().-]*$/.test(phone)) {
-    const link = element("a", "", copy.call + " " + phone);
-    link.href = "tel:" + phone.replace(/[^\d+]/g, "");
+  const phones = String(contact.phone ?? "").trim()
+    .split(/\s*(?:\bor\b|\bou\b|\bo\b|[;\n])\s*/i)
+    .filter(Boolean);
+  let canCall = false;
+
+  for (const label of phones) {
+    const number = label.replace(/^.*\((\+?\d[\d .-]+)\)\s*$/, "$1");
+    const digits = number.replace(/\D/g, "");
+    const localAreaSlash = /^\d{3,5}\/\d[\d .-]+$/.test(number);
+    const canDial = (/^\+?\d[\d ().–-]*$/.test(number) || localAreaSlash)
+      && !/^\+.*\(0\)/.test(number)
+      && digits.length >= 3 && digits.length <= 15;
+
+    if (!canDial) {
+      actions.append(element("span", "", label));
+      continue;
+    }
+
+    const dial = (number.startsWith("+") ? "+" : "") + digits;
+    if (excludedNumbers.has(dial)) continue;
+
+    const action = contact.emergency ? copy.emergency : copy.call;
+    const link = element("a", "", action + " " + label);
+    link.href = "tel:" + dial;
     actions.append(link);
-  } else if (phone) {
-    actions.append(element("span", "", phone));
+    canCall = true;
   }
-  const site = externalLink(contact.url, copy.site);
+
+  const site = externalLink(contact.url, contact.official ? copy.source : copy.site);
   if (site) actions.append(site);
   if (!actions.childElementCount) return null;
-  card.append(element("span", "contact-title", contact.org_name || contact.category),
-    element("span", "contact-name", contact.org_name ? contact.category : ""), actions);
+  if (!canCall) card.classList.add("contact-resource");
+
+  card.append(actions, element("span", "contact-title", contact.org_name || contact.category));
   return card;
 }
 
 function resourceRow(resource, copy) {
   const row = element("div", "reference");
   row.append(element("h3", "", resource.title));
+
   if (resource.start_year != null) {
     const years = [resource.start_year, resource.end_year].filter((year, index, values) =>
       year != null && values.indexOf(year) === index);
     row.append(element("p", "", years.join("–")));
   }
+
   const record = externalLink(resource.record_url, copy.law);
   const reference = externalLink(resource.reference_url, copy.source);
+
   if (record) row.append(record);
   if (reference && reference.href !== record?.href) {
     if (record) row.append(document.createElement("br"));
     row.append(reference);
   }
+
   return row;
 }
 
 function renderCountry(announce = false) {
   const copy = translations[language];
   const country = countries.find(item => item.code === select.value);
+
   question.hidden = !country;
   rights.hidden = !country;
   status.className = failed ? "status" : "sr-only";
   status.textContent = failed ? copy.unavailable : "";
-
   if (!country) return;
+
   const name = localized(country.name);
-  const prefix = copy.question;
-  document.querySelector("#question-start").textContent = prefix;
+  document.querySelector("#question-start").textContent = copy.question;
   document.querySelector("#country-name").textContent = name;
 
-  const buttons = country.contacts.map(contact => contactButton(contact, copy)).filter(Boolean);
+  const officialSource = "https://www.gov.br/mulheres/pt-br/assuntos/ligue180";
+  const officialContacts = country.code === "BR" ? [
+    { org_name: "Polícia Militar", phone: "190", emergency: true, official: true, url: officialSource },
+    { org_name: "Central de Atendimento à Mulher", phone: "180", official: true, url: officialSource }
+  ] : [];
+  const officialNumbers = new Set(officialContacts.map(contact => contact.phone));
+  const buttons = [
+    ...officialContacts.map(contact => contactButton(contact, copy)),
+    ...country.contacts.map(contact => contactButton(contact, copy, officialNumbers))
+  ].filter(Boolean);
+
   const resources = country.laws.map(resource => resourceRow(resource, copy));
   const directory = externalLink(country.help_url, copy.network + " · NO MORE");
   contacts.replaceChildren(...(buttons.length ? buttons : [element("p", "status", copy.emptyContacts)]));
   if (directory) contacts.append(directory);
+
   references.replaceChildren(...(resources.length ? resources : [element("p", "", copy.emptyRights)]));
   if (announce) status.textContent = copy.updated + name + ".";
 }
@@ -338,16 +408,19 @@ function renderReport(copy) {
     }
     return;
   }
+
   currentReport = url;
   if (!url) {
     report.replaceChildren(...reportPreview);
     return;
   }
+
   const frame = element("iframe", "report-frame");
   frame.title = copy.report;
   frame.src = url;
   frame.allowFullscreen = true;
   frame.loading = "lazy";
+
   const link = element("a", "report-external", copy.openReport);
   link.href = url;
   link.target = "_blank";
@@ -360,11 +433,16 @@ function renderLanguage() {
   const selected = select.value;
   document.documentElement.lang = language;
   document.title = "HerCall | " + copy.title;
-  textNodes.forEach(node => { node.textContent = copy[node.dataset.text]; });
+
+  textNodes.forEach(node => {
+    node.textContent = copy[node.dataset.text];
+  });
   document.querySelectorAll("[data-label]").forEach(node => {
     node.setAttribute("aria-label", copy[node.dataset.label]);
   });
-  languageButtons.forEach(button => button.setAttribute("aria-pressed", String(button.dataset.language === language)));
+  languageButtons.forEach(button => {
+    button.setAttribute("aria-pressed", String(button.dataset.language === language));
+  });
 
   if (countries.length) {
     const collator = new Intl.Collator(language);
@@ -375,6 +453,7 @@ function renderLanguage() {
   } else {
     select.replaceChildren(new Option(failed ? "—" : copy.loading, ""));
   }
+
   renderCountry();
   renderLogo();
   renderReport(copy);
@@ -417,11 +496,16 @@ function renderAnalyticsPreference(copy) {
 function startAnalytics() {
   if (!analyticsAvailable || !analyticsAllowed || analyticsStarted) return;
   analyticsStarted = true;
+
   const script = document.createElement("script");
   script.async = true;
   script.src = "https://www.googletagmanager.com/gtag/js?id=" + analyticsId;
   window.dataLayer = window.dataLayer || [];
-  function gtag() { window.dataLayer.push(arguments); }
+
+  function gtag() {
+    window.dataLayer.push(arguments);
+  }
+
   gtag("js", new Date());
   gtag("config", analyticsId, {
     send_page_view: false,
@@ -437,13 +521,19 @@ function startAnalytics() {
 }
 
 if (analyticsAvailable) {
-  try { analyticsAllowed = localStorage.getItem("hercall-analytics") === "yes"; } catch {}
+  try {
+    analyticsAllowed = localStorage.getItem("hercall-analytics") === "yes";
+  } catch {}
+
   window["ga-disable-" + analyticsId] = !analyticsAllowed;
   startAnalytics();
+
   analyticsPreference.addEventListener("click", () => {
     analyticsAllowed = !analyticsAllowed;
     window["ga-disable-" + analyticsId] = !analyticsAllowed;
-    try { localStorage.setItem("hercall-analytics", analyticsAllowed ? "yes" : "no"); } catch {}
+    try {
+      localStorage.setItem("hercall-analytics", analyticsAllowed ? "yes" : "no");
+    } catch {}
     startAnalytics();
     renderAnalyticsPreference(translations[language]);
   });
@@ -453,10 +543,12 @@ languageButtons.forEach(button => button.addEventListener("click", () => {
   language = button.dataset.language;
   renderLanguage();
 }));
+
 select.addEventListener("change", () => {
   details.open = false;
   renderCountry(true);
 });
+
 initialize();
 </script>
 </body>
