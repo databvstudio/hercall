@@ -80,6 +80,65 @@ footer button { font:inherit; color:inherit }
   .wordmark { margin:.85rem .2rem .7rem }
   .report-frame { min-height:23rem }
 }
+.contact,
+.contact.emergency,
+.contact.contact-resource {
+  display: grid;
+  justify-items: stretch;
+  gap: .45rem;
+  min-height: 0;
+  padding: .65rem 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--navy);
+}
+
+.contact + .contact {
+  border-top: 1px solid var(--line);
+}
+
+.contact-title {
+  grid-row: 1;
+  font-size: .9rem;
+}
+
+.contact-links {
+  display: grid;
+  justify-content: stretch;
+  gap: .45rem;
+}
+
+.contact-links a[href^="tel:"] {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 3rem;
+  padding: .55rem .75rem;
+  border-radius: .6rem;
+  background: var(--magenta);
+  color: var(--white);
+  font-size: clamp(1.25rem, 5vw, 1.65rem);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.contact.emergency .contact-links a[href^="tel:"] {
+  background: var(--navy);
+}
+
+.contact-links a:not([href^="tel:"]) {
+  justify-self: center;
+  color: var(--magenta);
+  font-size: .875rem;
+}
+
+.contact-links a[href^="tel:"]:focus-visible {
+  outline-color: var(--navy);
+}
+
+
+  
 </style>
 </head>
 <body>
@@ -274,7 +333,12 @@ function parseUrl(value) {
 function externalLink(value, label, className = "") {
   const url = parseUrl(value);
   if (url?.protocol !== "https:") return null;
-  const link = element("a", className, label);
+  
+  
+  const link = element("a", "", /^\+?\d[\d ()./–-]*$/.test(label) ? label : number);
+link.setAttribute("aria-label", action + " " + link.textContent);
+  
+  
   link.href = url.href;
   link.target = "_blank";
   link.rel = "noopener noreferrer";
