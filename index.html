@@ -333,19 +333,13 @@ function parseUrl(value) {
 function externalLink(value, label, className = "") {
   const url = parseUrl(value);
   if (url?.protocol !== "https:") return null;
-  
-  
-  const link = element("a", "", /^\+?\d[\d ()./–-]*$/.test(label) ? label : number);
-link.setAttribute("aria-label", action + " " + link.textContent);
-  
-  
+
+  const link = element("a", className, label);
   link.href = url.href;
   link.target = "_blank";
   link.rel = "noopener noreferrer";
   return link;
 }
-
-
 
 function contactButton(contact, copy, excludedNumbers = new Set()) {
   const card = element("article", contact.emergency ? "contact emergency" : "contact");
@@ -473,6 +467,8 @@ function renderCountry(announce = false) {
 
 
   
+
+let renderedLogoLanguage;
 
 function renderLogo() {
   if (language === renderedLogoLanguage) return;
